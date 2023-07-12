@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-// *init class todo*
+// Todo class + builder
 class Todo {
   dynamic id;
   String desc;
@@ -22,12 +22,6 @@ class Todo {
 class _HomePageState extends State<HomePage> {
   // text controller
   final _controller = TextEditingController();
-
-  //list of todo tasks
-  /*List toDoList = [
-    ["Bonjour Alexandre :)", false],
-    ["Faire les courses", false],
-  ];*/
 
   List<Todo> todoList = [];
 
@@ -84,7 +78,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
         backgroundColor: Colors.green,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: ListView.builder(
         itemCount: todoList.length,
