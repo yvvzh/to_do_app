@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/elements/dialogbox.dart';
+import 'package:to_do_app/elements/new_task_form.dart';
+import 'package:to_do_app/elements/edit_task_form.dart';
 import '../elements/tiles.dart';
 import 'package:uuid/uuid.dart';
 
@@ -34,8 +35,30 @@ class _HomePageState extends State<HomePage> {
     _controller.clear();
   }
 
+  // save edited task
+  void saveEditedTask() {
+    setState(() {
+      todoList[0].desc = _controller.text;
+    });
+    Navigator.of(context).pop();
+    _controller.clear();
+  }
+
+  // edit task
+  void editTask(int index) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return EditBox(
+            controller: _controller,
+            onSave: saveEditedTask,
+            onCancel: cancelTask,
+          );
+        });
+  }
+
   // dismiss dialog
-  void cancelNewTask() {
+  void cancelTask() {
     Navigator.of(context).pop();
     _controller.clear();
   }
@@ -48,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           return DialogBox(
             controller: _controller,
             onSave: saveNewTask,
-            onCancel: cancelNewTask,
+            onCancel: cancelTask,
           );
         });
   }
@@ -88,6 +111,7 @@ class _HomePageState extends State<HomePage> {
             taskCompleted: todoList[index].complete,
             onChanged: ((value) => checkBoxChanged(value, index)),
             deleteTask: (context) => deleteTask(index),
+            editTask: (context) => editTask(index),
           );
         },
       ),
